@@ -4,7 +4,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-#r1f99e6(r8yo1g-n3j^99(ryy)x3z0th2s)6u@r)a*j@t_j0%'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -86,7 +86,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # ----------------------
 LANGUAGE_CODE = 'ru-RU'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True

@@ -14,6 +14,8 @@ def posts_pagination(request, posts):
     paginator = Paginator(posts, POSTS_ON_PAGE)
     return paginator.get_page(page_number)
 
+def annotate_with_comment_count(queryset):
+    return queryset.annotate(comment_count=Count('comments'))
 
 def query_post(
         manager=Post.objects,
@@ -28,5 +30,7 @@ def query_post(
             category__is_published=True
         )
     if with_comments:
-        queryset = queryset.annotate(comment_count=Count('comments'))
+        queryset = annotate_with_comment_count(queryset)
     return queryset.order_by('-pub_date')
+
+

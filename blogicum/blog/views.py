@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from blog.forms import CommentForm, PostForm, ProfileForm
 from blog.models import Category, Comment, Post
 from blog.utils import posts_pagination, query_post
+from django.utils import timezone
 
 
 def index(request):
@@ -46,11 +47,13 @@ def post_detail(request, post_id):
 
 @login_required
 def create_post(request):
-
     form = PostForm(request.POST or None, files=request.FILES or None)
     if form.is_valid():
         post = form.save(commit=False)
         post.author = request.user
+        # 👉 Устанавливаем pub_date, если он не был указан вручную
+        if not post.pub_date:
+            post.pub_date = timezone.now()
         post.save()
         return redirect('blog:profile', request.user)
     context = {'form': form}
@@ -101,7 +104,7 @@ def edit_profile(request):
     form = ProfileForm(request.POST, instance=request.user)
     if form.is_valid():
         form.save()
-        return redirect('blog:profile', request.user)
+        return redirect('blog:  profile', request.user)
     context = {'form': form}
     return render(request, 'blog/user.html', context)
 
